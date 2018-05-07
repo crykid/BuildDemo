@@ -1,0 +1,86 @@
+apply plugin: 'com.android.application'
+apply from: "$rootDir/appConfig.gradle"
+
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.example.blank.pgyerdemo"
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 2
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        //多flavor配置需要
+        flavorDimensions "versionCode"
+    }
+
+    productFlavors {
+        flavor_release {
+            //app包名
+            applicationId "com.blank.pgyer.release"
+        }
+        flavor_test {
+            applicationId "com.blank.pgyer.rest"
+        }
+        flavor_dev {
+
+            applicationId "com.blank.pgyer.dev"
+        }
+
+    }
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+    }
+
+
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            versionNameSuffix '-env_release'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "basBASE_URLe_url", appConfig.BASE_URL_RELEASE)
+            buildConfigField("String", "APP_NAME", appConfig.APP_NAME_RELEASE)
+            buildConfigField("String", "RELEASE_TIME", "\"" + new Date().format("MMddHHmm") + "\"")
+            resValue "string", "app_name", "@string/app_name_release"
+
+        }
+        env_test {
+            minifyEnabled true
+            debuggable true
+            versionNameSuffix '-env_test'
+            buildConfigField("String", "BASE_URL", appConfig.BASE_URL_TEST)
+            buildConfigField("String", "APP_NAME", appConfig.APP_NAME_TEST)
+            buildConfigField("String", "RELEASE_TIME", "\"" + new Date().format("MMddHHmm") + "\"")
+            resValue "string", "app_name", "@string/app_name_test"
+
+        }
+        debug {
+            //是否允许debug
+            debuggable true
+            //是否混淆
+            minifyEnabled false
+            //版本号后缀
+            versionNameSuffix '-env_dev'
+            //接口请求baseUrl
+            buildConfigField("String", "BASE_URL", appConfig.BASE_URL_DEV)
+            //app名称，用于内部显示
+            buildConfigField("String", "APP_NAME", appConfig.APP_NAME_DEV)
+            //app打包时间
+            buildConfigField("String", "RELEASE_TIME", "\"" + new Date().format("MMddHHmm") + "\"")
+            //不同环境的app名称（面板名称,在@strings.xml文件中添加）
+            resValue "string", "app_name", "@string/app_name_dev"
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    compile 'com.pgyersdk:sdk:2.8.1'
+}

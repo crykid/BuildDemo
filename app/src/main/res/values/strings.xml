@@ -1,0 +1,6 @@
+<resources>
+    <!--多版本app面板名称配置-->
+    <string name="app_name_test">Pgyer测试版</string>
+    <string name="app_name_dev">Pgyer开发版</string>
+    <string name="app_name_release">Pgyer</string>
+</resources>

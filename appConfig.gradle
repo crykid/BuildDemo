@@ -1,0 +1,10 @@
+ext.appConfig = [
+        //多版本 请求base_url
+        BASE_URL_RELEASE: "\"www/\"",
+        BASE_URL_TEST   : "\"www/\"",
+        BASE_URL_DEV    : "\"www/\"",
+        //多版本 APP 名字
+        APP_NAME_DEV    : "\"PgyerDEV\"",
+        APP_NAME_TEST   : "\"PgyerTEST\"",
+        APP_NAME_RELEASE: "\"PgyerRELEASE\"",
+]
