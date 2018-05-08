@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply from: "$rootDir/appConfig.gradle"
 
+//应用 Bugtags 插件
+apply plugin: 'com.bugtags.library.plugin'
 
 android {
     compileSdkVersion 26
@@ -8,12 +10,21 @@ android {
         applicationId "com.example.blank.pgyerdemo"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 2
-        versionName "1.0"
+        versionCode 3
+        versionName "1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //多flavor配置需要
         flavorDimensions "versionCode"
+
+
+        ndk {
+            // 设置支持的 SO 库构架，一般而言，取你所有的库支持的构架的`交集`。
+            abiFilters 'armeabi'// 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
     }
+
+
 
     productFlavors {
         flavor_release {
@@ -22,6 +33,7 @@ android {
         }
         flavor_test {
             applicationId "com.blank.pgyer.rest"
+
         }
         flavor_dev {
 
@@ -75,6 +87,20 @@ android {
     }
 }
 
+
+
+//Bugtags 插件配置
+bugtags {
+    //自动上传符号表功能配置，如果需要根据 build varint 配置，请参考帮助中心->符号表->Android 符号表->配置自动上传符号表
+    appKey "3328b454706f21edb6a9a97661f8a866"  //这里是你的 appKey
+    appSecret "APP_SECRET"    //这里是你的 appSecret，管理员在设置页可以查看
+    mappingUploadEnabled true
+
+    //网络跟踪功能配置(企业版)
+    trackingNetworkEnabled true
+}
+
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
@@ -82,5 +108,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    //蒲公英
     compile 'com.pgyersdk:sdk:2.8.1'
+    //Bugtags
+    compile 'com.bugtags.library:bugtags-lib:latest.integration'
 }

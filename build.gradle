@@ -4,11 +4,13 @@ buildscript {
     
     repositories {
         google()
+        mavenCentral()
         jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0+'
-
+        //bugtags
+        classpath 'com.bugtags.library:bugtags-gradle:latest.integration'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -18,6 +20,7 @@ buildscript {
 allprojects {
     repositories {
         google()
+        mavenCentral()
         jcenter()
         maven { url "https://raw.githubusercontent.com/Pgyer/mvn_repo_pgyer/master" }
     }

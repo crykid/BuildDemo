@@ -25,38 +25,50 @@ public class MainActivity extends AppCompatActivity {
         tvBuild = findViewById(R.id.tv_main_build);
 
 
-        tvBuild.setText(BuildConfig.APP_NAME+"\n"+BuildConfig.BUILD_TYPE);
+        tvBuild.setText(BuildConfig.APP_NAME + "\n" + BuildConfig.BUILD_TYPE);
 
-        PgyUpdateManager.register(MainActivity.this,
-                new UpdateManagerListener() {
+        initPgyer();
 
-                    @Override
-                    public void onUpdateAvailable(final String result) {
 
-                        // 将新版本信息封装到AppBean中
-                        final AppBean appBean = getAppBeanFromString(result);
-                        Log.d(TAG, "onUpdateAvailable: " + appBean.getDownloadURL() + " ++++ " + appBean.getVersionName());
-                        new AlertDialog.Builder(MainActivity.this)
-                                .setTitle("更新")
-                                .setMessage("")
-                                .setNegativeButton(
-                                        "确定",
-                                        new DialogInterface.OnClickListener() {
+//        PgyUpdateManager.register(MainActivity.this,
+//                new UpdateManagerListener() {
+//
+//                    @Override
+//                    public void onUpdateAvailable(final String result) {
+//
+//                        // 将新版本信息封装到AppBean中
+//                        final AppBean appBean = getAppBeanFromString(result);
+//                        Log.d(TAG, "onUpdateAvailable: " + appBean.getDownloadURL() + " ++++ " + appBean.getVersionName());
+//                        new AlertDialog.Builder(MainActivity.this)
+//                                .setTitle("更新")
+//                                .setMessage("")
+//                                .setNegativeButton(
+//                                        "确定",
+//                                        new DialogInterface.OnClickListener() {
+//
+//                                            @Override
+//                                            public void onClick(
+//                                                    DialogInterface dialog,
+//                                                    int which) {
+//                                                startDownloadTask(
+//                                                        MainActivity.this,
+//                                                        appBean.getDownloadURL());
+//                                            }
+//                                        }).show();
+//                    }
+//
+//                    @Override
+//                    public void onNoUpdateAvailable() {
+//                    }
+//                });
+    }
 
-                                            @Override
-                                            public void onClick(
-                                                    DialogInterface dialog,
-                                                    int which) {
-                                                startDownloadTask(
-                                                        MainActivity.this,
-                                                        appBean.getDownloadURL());
-                                            }
-                                        }).show();
-                    }
+    private void initPgyer() {
+        if (BuildConfig.BUILD_TYPE.equals("env_test")) {
+            PgyUpdateManager.setIsForced(true); //设置是否强制更新。true为强制更新；false为不强制更新（默认值）。
+            PgyUpdateManager.register(this);
 
-                    @Override
-                    public void onNoUpdateAvailable() {
-                    }
-                });
+
+        }
     }
 }

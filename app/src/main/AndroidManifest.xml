@@ -16,6 +16,7 @@
     <!-- 可选-->
     <uses-permission android:name="android.permission.READ_LOGS" /> <!-- 获取logcat日志 -->
 
+
     <application
         android:allowBackup="true"
         android:name=".base.MyApplication"
@@ -35,7 +36,7 @@
 
         <meta-data
             android:name="PGYER_APPID"
-            android:value="2f4a3917b0070d97724a85399c9b455b" >
+            android:value="57a5abd3f700eca188d452399ab688ea" >
         </meta-data>
 
     </application>
